@@ -15,16 +15,25 @@ const UpdateProfilePage = () => {
   const [loading, setLoading] = useState(false);
 
   if (isPending) {
-    return <main className="p-8"><div className="skeleton h-40" /></main>;
+    return (
+      <main className="mx-auto w-full max-w-xl px-4 py-6 sm:py-10">
+        <div className="skeleton h-40 w-full rounded-2xl" />
+      </main>
+    );
   }
 
   if (!session) {
     return (
-      <main className="p-8 text-center">
-        <p>তথ্য পরিবর্তন করতে আগে লগইন করুন।</p>
-        <Link href="/signin" className="btn btn-primary mt-4">
-          সাইন ইন
-        </Link>
+      <main className="flex min-h-[50vh] items-center justify-center px-4 py-8">
+        <section className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm">
+          <p className="text-gray-800">
+            তথ্য পরিবর্তন করতে আগে লগইন করুন।
+          </p>
+
+          <Link href="/signin" className="btn btn-primary mt-4 text-white">
+            সাইন ইন
+          </Link>
+        </section>
       </main>
     );
   }
@@ -64,14 +73,23 @@ const UpdateProfilePage = () => {
   };
 
   return (
-    <main className="mx-auto max-w-xl px-4 py-10">
+    <main className="mx-auto w-full max-w-xl px-4 py-6 sm:py-10">
       <form
         onSubmit={handleUpdate}
-        className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
+        className="w-full rounded-2xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6"
       >
-        <h1 className="text-2xl font-bold">তথ্য পরিবর্তন</h1>
+        <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
+          তথ্য পরিবর্তন
+        </h1>
 
-        <label htmlFor="name" className="mt-6 block font-medium">
+        <p className="mt-2 text-sm text-gray-600">
+          আপনার প্রোফাইলের নাম পরিবর্তন করুন।
+        </p>
+
+        <label
+          htmlFor="name"
+          className="mt-6 block text-sm font-semibold text-gray-900"
+        >
           নাম
         </label>
 
@@ -81,14 +99,20 @@ const UpdateProfilePage = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder={session.user.name || "আপনার নাম লিখুন"}
-          className="input input-bordered mt-2 w-full"
+          className="input input-bordered mt-2 w-full bg-white text-gray-900 placeholder:text-gray-500"
           required
           maxLength={100}
           disabled={loading}
         />
 
         {message && (
-          <p role="status" className="mt-4 text-sm">
+          <p
+            role="status"
+            className={`mt-4 break-words text-sm ${message.includes("সফলভাবে")
+                ? "text-green-700"
+                : "text-red-600"
+              }`}
+          >
             {message}
           </p>
         )}
@@ -98,10 +122,13 @@ const UpdateProfilePage = () => {
           disabled={loading}
           className="btn btn-primary mt-5 w-full text-white"
         >
-          {loading ? "আপডেট হচ্ছে..." : "Update Information"}
+          {loading ? "আপডেট হচ্ছে..." : "তথ্য পরিবর্তন করুন"}
         </button>
 
-        <Link href="/profile" className="btn btn-ghost mt-2 w-full">
+        <Link
+          href="/profile"
+          className="btn btn-ghost mt-2 w-full text-gray-800"
+        >
           ফিরে যান
         </Link>
       </form>
