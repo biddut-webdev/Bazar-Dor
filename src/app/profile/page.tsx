@@ -1,11 +1,28 @@
 
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { authClient } from "@/app/lib/auth-client";
 
 const ProfilePage = () => {
   const { data: session, isPending } = authClient.useSession();
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    if (!session?.user.email) return;
+
+    try {
+      await navigator.clipboard.writeText(session.user.email);
+      setCopied(true);
+
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
 
   if (isPending) {
     return (
@@ -44,9 +61,24 @@ const ProfilePage = () => {
             </div>
           )}
 
-          <div>
-            <p className="text-lg font-semibold">{session.user.name}</p>
-            <p className="text-sm text-gray-500">{session.user.email}</p>
+          <div className="min-w-0">
+            <p className="text-lg font-semibold">
+              {session.user.name || "নাম দেওয়া হয়নি"}
+            </p>
+
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <p className="break-all text-sm text-gray-500">
+                {session.user.email}
+              </p>
+
+              <button
+                type="button"
+                onClick={copyEmail}
+                className="shrink-0 text-sm font-medium text-green-700 hover:underline"
+              >
+                {copied ? "কপি হয়েছে!" : "ইমেইল কপি"}
+              </button>
+            </div>
           </div>
         </div>
 
