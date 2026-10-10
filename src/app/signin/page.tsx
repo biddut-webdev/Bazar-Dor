@@ -66,15 +66,28 @@ export default function SignInPage() {
     setSocialLoading(provider);
 
     try {
-      await authClient.signIn.social({
+      const result = await authClient.signIn.social({
         provider,
         callbackURL: "/",
       });
-    } catch {
-      showToast("Social Login ব্যর্থ হয়েছে", "error");
+
+      console.log(`${provider} social login result:`, result);
+
+      if (result.error) {
+        console.error(`${provider} login error:`, result.error);
+        showToast(
+          result.error.message || `${provider} Login ব্যর্থ হয়েছে`,
+          "error"
+        );
+        setSocialLoading(null);
+      }
+    } catch (error) {
+      console.error(`${provider} social login exception:`, error);
+      showToast("Social Login ব্যর্থ হয়েছে। Console দেখো।", "error");
       setSocialLoading(null);
     }
   };
+
 
   return (
     <main className="flex min-h-[70vh] items-center justify-center bg-base-200 p-4">
