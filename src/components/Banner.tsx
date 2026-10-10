@@ -21,11 +21,11 @@ const Banner = () => {
             আজকের বাজার দর
           </p>
 
-          <h1 className="text-2xl font-extrabold leading-tight sm:text-3xl lg:text-4xl">
+          <h1 className="text-2xl font-extrabold leading-tight text-gray-900 sm:text-3xl lg:text-4xl">
             আজকের বাজারের দাম এক নজরে
           </h1>
 
-          <p className="mt-4 text-base-content/70 sm:mt-5 sm:text-lg">
+          <p className="mt-4 text-gray-600 sm:mt-5 sm:text-lg">
             চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক
             বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
           </p>
