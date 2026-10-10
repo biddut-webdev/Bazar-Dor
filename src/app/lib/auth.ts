@@ -3,8 +3,6 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
-
-
 const mongoUrl = process.env.BETTER_AUTH_MONGODB_URL;
 
 if (!mongoUrl) {
@@ -12,16 +10,14 @@ if (!mongoUrl) {
 }
 
 const client = new MongoClient(mongoUrl);
-
 const db = client.db("Bazar-Dor");
 
-
 export const auth = betterAuth({
-  baseURL: "https://bazar-dor-theta-five.vercel.app",
+  baseURL:
+    process.env.BETTER_AUTH_URL ||
+    "http://localhost:3000",
 
-  database: mongodbAdapter(db, {
-    client,
-  }),
+  database: mongodbAdapter(db, { client }),
 
   emailAndPassword: {
     enabled: true,
