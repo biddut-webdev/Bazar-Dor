@@ -84,6 +84,7 @@ const UpdateProfilePage = () => {
           className="input input-bordered mt-2 w-full"
           required
           maxLength={100}
+          disabled={loading}
         />
 
         {message && (
