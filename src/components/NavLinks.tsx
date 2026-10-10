@@ -4,7 +4,7 @@ import CategoryLinks from "./CategoryLinks";
 
 const NavLinks = async () => {
   const res = await fetch(
-    "https://api.abcz.workers.dev/api/bazardor/categories",
+    "https://openapi.programming-hero.com/api/bazardor/categories",
     {
       cache: "no-store",
     }

@@ -1,5 +1,5 @@
 
-const BASE_URL = "https://api.abcz.workers.dev/api/bazardor";
+const BASE_URL = "https://openapi.programming-hero.com/api/bazardor";
 // সব product
 export const getAllProducts = async () => {
   const res = await fetch(`${BASE_URL}/products`, {
