@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 const NotFound = () => {
@@ -10,11 +9,11 @@ const NotFound = () => {
         </p>
 
         <h1 className="mt-4 text-2xl font-bold text-gray-800">
-          পেজটি খুঁজে পাওয়া যায়নি!
+          পেজটি খুঁজে পাওয়া যায়নি!
         </h1>
 
         <p className="mt-3 text-gray-500">
-          দুঃখিত, আপনি যে পেজটি খুঁজছেন সেটি পাওয়া যাচ্ছে না।
+          দুঃখিত, আপনি যে পেজটি খুঁজছেন সেটি পাওয়া যাচ্ছে না।
         </p>
 
         <Link
