@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -10,6 +9,7 @@ export default function SignInPage() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<"google" | "github" | null>(null);
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState<"success" | "error">("error");
 
@@ -61,6 +61,10 @@ export default function SignInPage() {
   };
 
   const socialLogin = async (provider: "google" | "github") => {
+    if (loading || socialLoading) return;
+
+    setSocialLoading(provider);
+
     try {
       await authClient.signIn.social({
         provider,
@@ -68,6 +72,7 @@ export default function SignInPage() {
       });
     } catch {
       showToast("Social Login ব্যর্থ হয়েছে", "error");
+      setSocialLoading(null);
     }
   };
 
@@ -115,7 +120,7 @@ export default function SignInPage() {
           <button
             type="submit"
             className="btn btn-success mt-4 text-white"
-            disabled={loading}
+            disabled={loading || socialLoading !== null}
           >
             {loading ? "অপেক্ষা করো..." : "Login"}
           </button>
@@ -125,19 +130,23 @@ export default function SignInPage() {
           <button
             type="button"
             className="btn btn-outline"
-            disabled={loading}
+            disabled={loading || socialLoading !== null}
             onClick={() => socialLogin("google")}
           >
-            Continue with Google
+            {socialLoading === "google"
+              ? "অপেক্ষা করো..."
+              : "Continue with Google"}
           </button>
 
           <button
             type="button"
             className="btn btn-outline"
-            disabled={loading}
+            disabled={loading || socialLoading !== null}
             onClick={() => socialLogin("github")}
           >
-            Continue with GitHub
+            {socialLoading === "github"
+              ? "অপেক্ষা করো..."
+              : "Continue with GitHub"}
           </button>
 
           <p className="mt-3 text-center text-sm">
