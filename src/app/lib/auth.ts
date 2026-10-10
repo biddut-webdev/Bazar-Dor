@@ -3,14 +3,25 @@ import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
-const client = new MongoClient(
-  process.env.BETTER_AUTH_MONGODB_URL!
-);
+
+
+const mongoUrl = process.env.BETTER_AUTH_MONGODB_URL;
+
+if (!mongoUrl) {
+  throw new Error("BETTER_AUTH_MONGODB_URL is missing");
+}
+
+const client = new MongoClient(mongoUrl);
 
 const db = client.db("Bazar-Dor");
 
 
 export const auth = betterAuth({
+  baseURL:
+    process.env.BETTER_AUTH_URL ||
+    process.env.NEXT_PUBLIC_APP_URL ||
+    "http://localhost:3000",
+
   database: mongodbAdapter(db, {
     client,
   }),
@@ -38,5 +49,8 @@ export const auth = betterAuth({
     },
   },
 
-  trustedOrigins: ["http://localhost:3000"],
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://bazar-dor-theta-five.vercel.app",
+  ],
 });
